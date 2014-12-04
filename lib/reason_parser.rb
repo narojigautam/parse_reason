@@ -1,3 +1,4 @@
+require 'csv'
 class ReasonParser
   def scan_expression(regexp, scannable_string)
     scannable_string.scan(regexp)
@@ -19,7 +20,21 @@ class ReasonParser
         probable_reason
       end
     end
-    reasons_arr.flatten!.join(",")
+    reasons_arr.flatten.join(",")
+  end
+
+  def clean_csv(path_to_csv)
+    temp_csv_path = "#{path_to_csv}"
+    temp_csv_path.slice!(".csv")
+    temp_csv_path += "_temp.csv"
+    CSV.open(temp_csv_path, "wb") do |csv|
+      csv << ["id", "retoure_reason"]
+      CSV.foreach(path_to_csv) do |row|
+        next if row[0] == "id"
+        row[1] = parse_reasons_from(row[1])
+        csv << row
+      end
+    end
   end
 
   private
