@@ -14,9 +14,9 @@ RSpec.describe ReasonParser do
   end
 
   describe "#parse_reasons_from" do
-    let(:reasons_string) { "jhgjh1/2,345x1////111100000" }
+    let(:reasons_string) { "jhgjh1/210,345x1////111100000" }
     it "parses out valid reasons from passed string" do
-      expect(parser_instance.parse_reasons_from(reasons_string)).to eq("1,2,3,4,5,x1,8")
+      expect(parser_instance.parse_reasons_from(reasons_string)).to eq("1,2,10,3,4,5,x1,8")
     end
   end
 end

@@ -9,7 +9,12 @@ class ReasonParser
       if probable_reason.to_i > 1000000
         "8"
       elsif !probable_reason.match(/x[1-4]/) && probable_reason.length > 1
-        probable_reason.split("")
+        if probable_reason.match(/10/)
+          probable_reason.slice!("10")
+          probable_reason.split("") + ["10"]
+        else
+          probable_reason.split("")
+        end
       else
         probable_reason
       end
